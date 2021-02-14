@@ -1,6 +1,10 @@
+from django.http.response import HttpResponse, HttpResponseRedirect
 from basic_app.forms import UserProfileInfoForm
 from django.shortcuts import render
 from basic_app.forms import UserForm, UserProfileInfoForm
+from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -42,11 +46,33 @@ def register(request):
 
 
 
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))
 
 
     
 
 def user_login(request):
-    return render(request, 'basic_app/user_login.html')    
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            if user.is_active:
+                login(request,user)
+
+                return HttpResponseRedirect(reverse('index'))
+            else:
+                return HttpResponseRedirect("your Account is not active")
+        else:
+            return HttpResponseRedirect("Invalid login details")
+
+    else:
+        #nothing entered
+        return render(request, 'basic_app/user_login.html', {})    
 
 #second commit
