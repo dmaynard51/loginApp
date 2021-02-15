@@ -5,11 +5,30 @@ from basic_app.forms import UserForm, UserProfileInfoForm
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+import openpyxl
 
 # Create your views here.
 
 def index(request):
-    return render(request, 'basic_app/index.html')
+
+    excel_data = list()
+    if request.method == "POST":
+        excel_file = request.FILES["excel_file"]
+
+        wb = openpyxl.load_workbook(excel_file)
+
+        worksheet= wb['Sheet1']
+        print(worksheet)
+
+
+        for row in worksheet.iter_rows():
+            row_data = list()
+            for cell in row:
+                row_data.append(str(cell.value))
+            excel_data.append(row_data)
+
+
+    return render(request, 'basic_app/index.html', {'excel_data' : excel_data})
 
 def register(request):
     registered = False
