@@ -19,6 +19,10 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
 STATIC_DIR = os.path.join(BASE_DIR,'static')
 MEDIA_DIR = os.path.join(BASE_DIR,'media')
 
+DATETIME_FORMAT = '%d-%m-%Y %H:%M:%S' 
+USE_L10N = False
+USE_TZ = False # if you plan to disable timezone support
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/

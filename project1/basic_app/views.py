@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 import openpyxl
+from basic_app.models import invoices
 
 # Create your views here.
 
@@ -25,6 +26,11 @@ def index(request):
             row_data = list()
             for cell in row:
                 row_data.append(str(cell.value))
+            temp = row_data[1].split()
+
+            invoice = invoices.objects.get_or_create(invoiceNumber=row_data[0], invoiceDate=temp[0])[0]
+            
+            invoice.save()
             excel_data.append(row_data)
 
 
