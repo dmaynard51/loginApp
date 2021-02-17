@@ -17,6 +17,22 @@ class UserProfileInfo(models.Model):
 
 
 class invoices(models.Model):
-
-    invoiceNumber = models.CharField(max_length=256)
-    invoiceDate = models.DateField(blank=True, null=True)
+    customer_number = models.CharField(default='', max_length=256)
+    customer_name = models.CharField(default='', max_length=256)
+    invoice_number = models.CharField(default='', max_length=256)
+    invoice_date = models.CharField(max_length=256,default='')
+    due_date = models.CharField(max_length=256,default='')
+    salesOrder_number = models.CharField(max_length=256,default=0)
+    amount_due = models.IntegerField(default=0)
+    current_balance = models.IntegerField(default=0)
+    past_due_1_30 = models.IntegerField(default=0)
+    past_due_31_60 = models.IntegerField(default=0)
+    over_90 = models.IntegerField(default=0)
+    jde_customer_number = models.CharField(max_length=256,default='')
+    business_unit = models.CharField(max_length=256,default='')
+    rep = models.CharField(max_length=256,default='')
+    netdays = models.CharField(max_length=256,default='')
+    custType = models.CharField(max_length=256,default='')
+    custCode = models.CharField(max_length=256,default='')
+    custGroup3 = models.CharField(max_length=256,default='')
+    custPO = models.CharField(max_length=256,default='')
