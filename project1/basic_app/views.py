@@ -105,4 +105,7 @@ def user_login(request):
         #nothing entered
         return render(request, 'basic_app/user_login.html', {})    
 
-#second commit
+
+def account_page(request):
+    all_invoices = invoices.objects.all()
+    return render(request, 'basic_app/account_page.html', {"all_invoices": all_invoices})

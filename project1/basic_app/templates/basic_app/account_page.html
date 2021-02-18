@@ -1,0 +1,24 @@
+{% extends "basic_app/base.html" %}
+{% block body_block %}
+
+<div class="container">
+    <ul class="nav navbar-nav">
+        <li>Customer Number</li>
+        <li>Customer Name</li>
+        <li>invoice_number</li>
+        <li>amount_due</li>
+        <li>current_balance</li>
+        <li>past_due_1_30</li>
+        <li>past_due_31_60</li>
+        <li>over_90</li>
+    </ul>
+
+</div>
+{% for invoice in all_invoices %}
+
+<h1>{{invoice.customer_name}} </h1>
+
+
+{% endfor %}
+
+{% endblock %}
