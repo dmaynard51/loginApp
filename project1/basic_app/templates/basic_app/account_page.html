@@ -2,23 +2,35 @@
 {% block body_block %}
 
 <div class="container">
-    <ul class="nav navbar-nav">
-        <li>Customer Number</li>
-        <li>Customer Name</li>
-        <li>invoice_number</li>
-        <li>amount_due</li>
-        <li>current_balance</li>
-        <li>past_due_1_30</li>
-        <li>past_due_31_60</li>
-        <li>over_90</li>
-    </ul>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope='col'>Customer Number</th>
+            <th scope='col'>Customer Name</th>
+            <th scope='col'>invoice_number</th>
+            <th scope='col'>amount_due</th>
+            <th scope='col'>current_balance</th>
+            <th scope='col'>past_due_1_30</th>
+            <th scope='col'>past_due_31_60</th>
+            <th scope='col'>over_90</th>
+        </tr>
+        </thead>
 
+    {% for invoice in all_invoices %}
+        <tr>
+            <td>{{invoice.customer_number}}</td>
+            <td>{{invoice.customer_name}}</td>
+            <td>invoice</td>
+            <td>{{invoice.total_amount_due}}</td>
+        </tr>
+    {% endfor %}
+    </table>
 </div>
-{% for invoice in all_invoices %}
+
 
 <h1>{{invoice.customer_name}} </h1>
 
 
-{% endfor %}
+
 
 {% endblock %}

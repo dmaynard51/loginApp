@@ -7,6 +7,8 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 import openpyxl
 from basic_app.models import invoices
+from django.db.models import Sum
+from django.db import connection
 
 # Create your views here.
 
@@ -107,5 +109,7 @@ def user_login(request):
 
 
 def account_page(request):
-    all_invoices = invoices.objects.all()
+    all_invoices = invoices.objects.values('customer_number', 'customer_name') \
+        .annotate(total_amount_due=Sum('amount_due'))
+    print (all_invoices)
     return render(request, 'basic_app/account_page.html', {"all_invoices": all_invoices})

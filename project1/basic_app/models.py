@@ -27,6 +27,7 @@ class invoices(models.Model):
     current_balance = models.IntegerField(default=0)
     past_due_1_30 = models.IntegerField(default=0)
     past_due_31_60 = models.IntegerField(default=0)
+    past_due_61_90 = models.IntegerField(default=0)
     over_90 = models.IntegerField(default=0)
     jde_customer_number = models.CharField(max_length=256,default='')
     business_unit = models.CharField(max_length=256,default='')
