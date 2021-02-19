@@ -76,6 +76,14 @@ def register(request):
     return render(request, 'basic_app/registration.html', {'registered' : registered, 'profile_form': profile_form, 'user_form': user_form})
 
 
+def customer(request):
+    if request.method == 'POST':
+        cus_name = request.POST['searchByCustomer']
+        print (cus_name)
+        return render(request, 'basic_app/searched_customer.html', {'cus_name' : cus_name})
+
+    return render(request, 'basic_app/customer.html')
+
 
 
 @login_required
@@ -109,7 +117,14 @@ def user_login(request):
 
 
 def account_page(request):
-    all_invoices = invoices.objects.values('customer_number', 'customer_name') \
-        .annotate(total_amount_due=Sum('amount_due'))
+    all_invoices = invoices.objects.all().raw('SELECT customer_number AS id, \
+        customer_name, sum(amount_due) AS amount, sum(current_balance) AS total_current,\
+        sum(past_due_1_30) AS total_1_30, \
+        sum(past_due_31_60) AS total_31_60, \
+        sum(past_due_61_90) AS total_61_90, \
+        sum(over_90) AS total_90, business_unit, \
+        rep, netdays, custType, custCode, custGroup3 from basic_app_invoices \
+        GROUP BY customer_number ORDER BY sum(amount_due)')
+
     print (all_invoices)
     return render(request, 'basic_app/account_page.html', {"all_invoices": all_invoices})

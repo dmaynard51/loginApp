@@ -7,21 +7,45 @@
         <tr>
             <th scope='col'>Customer Number</th>
             <th scope='col'>Customer Name</th>
-            <th scope='col'>invoice_number</th>
             <th scope='col'>amount_due</th>
             <th scope='col'>current_balance</th>
             <th scope='col'>past_due_1_30</th>
             <th scope='col'>past_due_31_60</th>
+            <th scope='col'>past_due_61_90</th>
             <th scope='col'>over_90</th>
+            <th scope='col'>Business Unit</th>
+            <th scope='col'>Customer Rep</th>
+            <th scope='col'>Net Days</th>
+            <th scope='col'>Customer Type</th>
+            <th scope='col'>Customer Code</th>
+            <th scope='col'>Customer Group 3</th>
+           
+
         </tr>
         </thead>
 
     {% for invoice in all_invoices %}
         <tr>
-            <td>{{invoice.customer_number}}</td>
+            <td>{{invoice.id}}</td>
+ 
             <td>{{invoice.customer_name}}</td>
-            <td>invoice</td>
-            <td>{{invoice.total_amount_due}}</td>
+
+            <td>{{invoice.amount}}</td>
+          
+            <td>{{invoice.total_current}}</td>
+            <td>{{invoice.total_1_30}}</td>
+            
+            <td>{{invoice.total_31_60}}</td>
+            <td>{{invoice.total_61_90}}</td>
+              
+            <td>{{invoice.total_90}}</td>
+            <td>{{invoice.business_unit}}</td>
+            <td>{{invoice.rep}}</td>
+            <td>{{invoice.netdays}}</td>
+            <td>{{invoice.custType}}</td>
+            <td>{{invoice.custCode}}</td>
+            <td>{{invoice.custGroup3}}</td>
+            
         </tr>
     {% endfor %}
     </table>
