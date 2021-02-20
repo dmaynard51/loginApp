@@ -10,16 +10,22 @@
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <ul class="nav navbar-nav">
-                <li><a class="navbar-link" href="{% url 'index' %}">Index</a></li>
+                <li><a class="navbar-link" href="{% url 'index' %}">INDEX</a></li>
                 <li><a class="navbar-link" href="{% url 'admin:index' %}">ADMIN</a></li>
                 <li><a class="navbar-link" href="{% url 'basic_app:register' %}">REGISTER</a></li>
                 <li><a class='navbar-link' href="{% url 'basic_app:account_page' %}">ACCOUNT PAGE</a> </li>
                 {% if user.is_authenticated %}
-                <li><a class ='navbar-link' href="{% url 'basic_app:user_logout' %}">Logout</a></li>
+                <li><a class ='navbar-link' href="{% url 'basic_app:user_logout' %}">LOGOUT</a></li>
                 {% else %}
-                <li><a class ='navbar-link' href="{% url 'basic_app:user_login' %}">Login</a></li>
+                <li><a class ='navbar-link' href="{% url 'basic_app:user_login' %}">LOGIN</a></li>
                 {% endif %}
-                <li><a class='navbar-link' href="{% url 'basic_app:customer' %}">Search by Customer</a></li>
+                <li><a class='navbar-link' href="{% url 'basic_app:customer' %}">SEARCH</a></li>
+
+            </ul>
+            <ul class="nav navbar-nav pull-right">         
+                {%if user.is_authenticated%}
+                <li ><a class= 'navbar-link'>{{user.username}}</a></li>
+                {% endif %}
             </ul>
 
 

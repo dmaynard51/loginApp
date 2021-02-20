@@ -2,9 +2,46 @@
 {% block body_block %}
 
 
-<h1>SEARCH FOR CUSTOMER</h1>
+<h1>SEARCH</h1>
 
-<h2>{{cus_name}} </h2>
+
+<div class='container'>
+    <table class='table table-striped'>
+        <thead>
+            <tr>
+                <th scope='col'>Invoice Number</th>
+                <th scope='col'>Invoice Date</th>
+                <th scope='col'>Due Date</th>
+                <th scope='col'>Sales Order</th>
+                <th scope='col'>Amount Due</th>
+                <th scope='col'>Current</th>
+                <th scope='col'>1-30 Past Due</th>
+                <th scope='col'>31-60 Past Due</th>
+                <th scope='col'>61-90 Past Due</th>
+                <th scope='col'>90+ Past Due</th>
+                <th scope='col'>PO Number</th>
+            </tr>
+        </thead>
+
+        {% for invoice in cus_invoices %}
+        <tr>
+            <td>{{invoice.invoice_number}}</td>
+            <td>{{invoice.invoice_date}}</td>
+            <td>{{invoice.due_date}}</td>
+            <td>{{invoice.salesOrder_number}}</td>            
+            <td>{{invoice.amount_due}}</td>
+            <td>{{invoice.current_balance}}</td>
+            <td>{{invoice.past_due_1_30}}</td>
+            <td>{{invoice.past_due_31_60}}</td>
+            <td>{{invoice.past_due_61_90}}</td>
+            <td>{{invoice.over_90}}</td>
+            <td>{{invoice.custPO}}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+</div>
 
 
 {% endblock %}

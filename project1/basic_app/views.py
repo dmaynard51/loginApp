@@ -79,8 +79,14 @@ def register(request):
 def customer(request):
     if request.method == 'POST':
         cus_name = request.POST['searchByCustomer']
-        print (cus_name)
-        return render(request, 'basic_app/searched_customer.html', {'cus_name' : cus_name})
+        
+        cus_invoices = invoices.objects.all().raw('SELECT invoice_number AS id, \
+            salesOrder_number, invoice_number, invoice_date, due_date, \
+                amount_due, current_balance, past_due_1_30, past_due_31_60, \
+                past_due_61_90, over_90, custPO FROM basic_app_invoices WHERE \
+                customer_number= %s', [cus_name])
+
+        return render(request, 'basic_app/searched_customer.html', {'cus_invoices' : cus_invoices})
 
     return render(request, 'basic_app/customer.html')
 
