@@ -9,6 +9,9 @@ import openpyxl
 from basic_app.models import invoices
 from django.db.models import Sum
 from django.db import connection
+from django.http import JsonResponse
+import csv
+import datetime
 
 # Create your views here.
 
@@ -134,3 +137,25 @@ def account_page(request):
 
     print (all_invoices)
     return render(request, 'basic_app/account_page.html', {"all_invoices": all_invoices})
+
+def exportCSV(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=account' +\
+    str(datetime.datetime.now()) + '.csv'
+
+    writer=csv.writer(response)
+    writer.writerow(['Customer Number', 'Customer Name'])
+
+    customer = invoices.objects.all().raw('SELECT customer_number AS id, \
+        customer_name, sum(amount_due) AS amount, sum(current_balance) AS total_current,\
+        sum(past_due_1_30) AS total_1_30, \
+        sum(past_due_31_60) AS total_31_60, \
+        sum(past_due_61_90) AS total_61_90, \
+        sum(over_90) AS total_90, business_unit, \
+        rep, netdays, custType, custCode, custGroup3 from basic_app_invoices \
+        GROUP BY customer_number ORDER BY sum(amount_due)')
+
+    print (customer[0])
+    for cus in customer:
+        writer.writerow([cus.id, cus.customer_name])
+    return response
