@@ -1,7 +1,7 @@
 {% extends "basic_app/base.html" %}
 {% block body_block %}
 <h1>CUSTOMER PAGE</h1>
-<form method="POST">
+<form  method="POST">
     {% csrf_token %}
     <div class='mb-3'>
         <label for="searchByCustomer" class="form-label">Search by Customer #</label>
