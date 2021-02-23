@@ -92,15 +92,16 @@ def customer(request):
                 past_due_61_90, over_90, custPO FROM basic_app_invoices WHERE \
                 customer_number= %s', [cus_name])
         print (cus_name)
-        return render(request, 'basic_app/customer.html')
+        #return HttpResponseRedirect('basic_app/searched_customer/')
 
+        return searched_customer(request, cus_name)
     return render(request, 'basic_app/customer.html')
 
 
-def searched_customer(request, customer):
+def searched_customer(request, cus_name):
     print ("test")
     
-    cus_name = customer
+    #cus_name = cus_name
 
     cus_invoices = invoices.objects.all().raw('SELECT invoice_number AS id, \
         salesOrder_number, invoice_number, invoice_date, due_date, \
@@ -160,7 +161,9 @@ def exportCSV(request):
     str(datetime.datetime.now()) + '.csv'
 
     writer=csv.writer(response)
-    writer.writerow(['Customer Number', 'Customer Name'])
+    writer.writerow(['Customer Number', 'Customer Name', 'Amount Due', 'Current Balance', \
+        'Past Due 1-30', ' Past Due 31-60', 'Past Due 61-90', 'Over 90', 'Business Unit', \
+        'Customer Rep', 'Net Days', 'Customer Type', 'Customer Code', 'Customer Group 3'])
 
     customer = invoices.objects.all().raw('SELECT customer_number AS id, \
         customer_name, sum(amount_due) AS amount, sum(current_balance) AS total_current,\
@@ -171,7 +174,10 @@ def exportCSV(request):
         rep, netdays, custType, custCode, custGroup3 from basic_app_invoices \
         GROUP BY customer_number ORDER BY sum(amount_due)')
 
-    print (customer[0])
+    #print (customer[0])
     for cus in customer:
-        writer.writerow([cus.id, cus.customer_name])
+        writer.writerow([cus.id, cus.customer_name, cus.amount, cus.total_current, \
+        cus.total_1_30, cus.total_31_60, cus.total_61_90, cus.total_90,\
+        cus.business_unit, cus.rep, cus.netdays, cus.custType, cus.custCode, \
+        cus.custGroup3])
     return response
